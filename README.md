@@ -21,7 +21,7 @@ It is designed for reinforcement learning (RL) experiments and development, with
 You can build the image locally using Docker:
 
 ```bash
-docker build -t my-ray-brax .
+docker build -t python-jupyter-lab .
 ```
 
 ---
@@ -31,7 +31,7 @@ docker build -t my-ray-brax .
 Start a container with JupyterLab exposed on port `8888`:
 
 ```bash
-docker run -it --rm -p 8888:8888 my-ray-brax
+docker run -it --rm -p 8888:8888 python-jupyter-lab
 ```
 
 Then open [http://localhost:8888](http://localhost:8888) in your browser.  
@@ -42,7 +42,7 @@ By default, authentication token is disabled (`--NotebookApp.token=''`), so no l
 If you prefer a different outside port (e.g. `9999`):
 
 ```bash
-docker run -it --rm -p 9999:8888 my-ray-brax
+docker run -it --rm -p 9999:8888 python-jupyter-lab
 ```
 
 JupyterLab inside the container still listens on port `8888`, but you access it via `http://localhost:9999`.
@@ -52,7 +52,7 @@ JupyterLab inside the container still listens on port `8888`, but you access it 
 To make your local files available inside JupyterLab:
 
 ```bash
-docker run -it --rm -p 8888:8888 -v $(pwd):/app my-ray-brax
+docker run -it --rm -p 8888:8888 -v $(pwd):/app python-jupyter-lab
 ```
 
 ---
