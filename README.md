@@ -52,7 +52,7 @@ JupyterLab inside the container still listens on port `8888`, but you access it 
 To make your local files available inside JupyterLab:
 
 ```bash
-docker run -it --rm -p 8888:8888 -v $(pwd):/app python-jupyter-lab
+docker run -it --rm -p 8888:8888 -v $(PWD):/app python-jupyter-lab
 ```
 
 ---
