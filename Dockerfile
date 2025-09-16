@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         curl \
         wget \
         python3.10 \
-        python3.10-dev \
         python3-pip \
         python3-venv \
         libopenmpi-dev \
