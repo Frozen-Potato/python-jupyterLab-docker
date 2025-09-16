@@ -1,7 +1,7 @@
-# Sử dụng Python 3.10 (ổn định với Ray và JAX)
+# Use Python 3.10 (stable with Ray and JAX)
 FROM python:3.10-slim
 
-# Thiết lập biến môi trường (tránh cảnh báo và optimize JAX)
+# Set environment variables (avoid warnings and optimize JAX)
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     TF_CPP_MIN_LOG_LEVEL=2 \
@@ -16,24 +16,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libopenmpi-dev \
         && rm -rf /var/lib/apt/lists/*
 
-# Tạo thư mục làm việc
+# Create working directory
 WORKDIR /app
 
-# Cài đặt Ray RLlib và các phụ thuộc
+# Install Ray RLlib and dependencies
 RUN pip install --upgrade pip setuptools wheel && \
     pip install "ray[rllib]" "ray[default]" "ray[serve]" && \
     pip install gymnasium[atari,accept-rom-license] && \
     pip install pygame
 
-# Cài đặt JAX + Brax (CPU version)
+# Install JAX + Brax (CPU version)
 RUN pip install --upgrade jax jaxlib brax
 
-# Cài đặt JupyterLab
+# Install JupyterLab
 RUN pip install jupyterlab
 
-# Expose port cho JupyterLab
+# Expose port for JupyterLab
 EXPOSE 8888
 
-# Khởi động JupyterLab khi container chạy
+# Launch JupyterLab when container starts
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''"]
-
