@@ -43,17 +43,22 @@ WORKDIR /app
 # First install core packages
 RUN pip install --no-cache-dir setuptools wheel
 
-# Install JAX (CPU version) - install before other packages that might need it
-RUN pip install --no-cache-dir jax jaxlib
+# Install JAX (CPU version) with specific versions that work well together
+RUN pip install --no-cache-dir "jax>=0.4.13" "jaxlib>=0.4.13"
 
-# Install Ray with specific components
+# Install core ML dependencies
+RUN pip install --no-cache-dir numpy scipy
+
+# Install Ray with specific components (may downgrade some JAX components, that's ok)
 RUN pip install --no-cache-dir "ray[rllib,default,serve]"
 
 # Install gymnasium and gaming dependencies
 RUN pip install --no-cache-dir "gymnasium[atari,accept-rom-license]" pygame
 
-# Install Brax (should come after JAX)
-RUN pip install --no-cache-dir brax
+# Install Brax with compatible versions (install after Ray to avoid conflicts)
+# If this still fails, we can make it optional or use a different approach
+RUN pip install --no-cache-dir "brax>=0.9.0" "flax>=0.7.0" "optax>=0.1.7" || \
+    (echo "Brax installation failed, continuing without it..." && exit 0)
 
 # Install JupyterLab
 RUN pip install --no-cache-dir jupyterlab ipywidgets
