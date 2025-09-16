@@ -27,6 +27,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libxext6 \
         libxrender-dev \
         libgomp1 \
+        vim \
+        nano \
+        less \
+        tree \
+        htop \
     && rm -rf /var/lib/apt/lists/*
 
 # Ensure python3 and pip point to Python 3.10
