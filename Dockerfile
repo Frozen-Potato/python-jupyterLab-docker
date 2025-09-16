@@ -19,15 +19,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Tạo thư mục làm việc
 WORKDIR /app
 
-# Cài đặt Ray RLlib và các phụ thuộc (bao gồm cả TensorBoard, Reverb, gymnasium,…)
+# Cài đặt Ray RLlib và các phụ thuộc
 RUN pip install --upgrade pip setuptools wheel && \
     pip install "ray[rllib]" "ray[default]" "ray[serve]" && \
     pip install gymnasium[atari,accept-rom-license] && \
     pip install pygame
 
 # Cài đặt JAX + Brax (CPU version)
-# Nếu bạn có GPU, có thể đổi sang jaxlib==0.4.x+cudaXXX theo hướng dẫn của Google
 RUN pip install --upgrade jax jaxlib brax
 
-# Mặc định chạy Python interactive
-CMD ["python"]
+# Cài đặt JupyterLab
+RUN pip install jupyterlab
+
+# Expose port cho JupyterLab
+EXPOSE 8888
+
+# Khởi động JupyterLab khi container chạy
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''"]
+
