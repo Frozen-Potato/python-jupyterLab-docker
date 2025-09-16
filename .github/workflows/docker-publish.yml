@@ -28,6 +28,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile # or ./Dockerfile.tmux-centos7
+        file: ./Dockerfile # or ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-lib
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-jupyter-lab
